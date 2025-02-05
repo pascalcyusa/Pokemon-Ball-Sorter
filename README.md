@@ -1,42 +1,44 @@
 # Color Ball Sorting Robot
 
-This project implements an automated ball sorting system using a Raspberry Pi that can detect and sort colored balls into different containers based on their colors.
+A Raspberry Pi-based robot that automatically detects and sorts colored balls using color detection and servo positioning.
 
 ## Features
 
-- Color detection using TCS3200 color sensor
-- Stepper motor control for ball feeding mechanism
-- Servo motor control for sorting mechanism
-- Supports sorting 4 different colors:
-  - Red (0° servo position)
-  - Green (45° servo position)
-  - Blue (90° servo position)
-  - Yellow (135° servo position)
+- Continuous ball feeding using threaded stepper motor control
+- RGB color detection and classification
+- Automated servo positioning for ball sorting
+- Configurable sorting positions for different colors
+- Returns to rest position after each sort
 
-## Hardware Requirements
+## Hardware Components
 
 - Raspberry Pi
-- TCS3200 Color Sensor
-- Stepper Motor with L298N driver
-- Servo Motor
-- GPIO connections:
-  - Color Sensor: pins 13, 15, 16, 18, 22
-  - Stepper Motor: pins 37, 36, 31, 29
-  - Servo Motor: pin 11
+- RGB Color Sensor (detects Red, Green, Blue values)
+- Stepper Motor (continuous ball feeding)
+- Servo Motor (sorting mechanism)
+- Ball feeding mechanism
 
-## How It Works
+## Technical Details
 
-1. The stepper motor continuously moves at a slow pace to feed balls
-2. When a ball reaches the color sensor, it detects the color
-3. Based on the detected color, the servo motor moves to the corresponding angle:
-   - Red → 0°
-   - Blue → 45°
-   - Green → 90°
-   - Yellow → 135°
-4. The ball falls through the correct slot for collection
+### Color Detection
+- Reads RGB values from color sensor
+- Classifies colors based on RGB intensity ratios
+- Currently detects: Red, Green, Blue, Yellow
+
+### Motor Control
+- Stepper motor runs in separate thread for continuous operation
+- Servo motor moves to specific angles based on detected color
+- Servo returns to rest position after each sort
+
+### Operating Sequence
+1. Stepper motor continuously feeds balls
+2. Color sensor detects RGB values
+3. Program classifies the color
+4. Servo moves to corresponding position for sorting
+5. Servo returns to rest position
+6. Process repeats
 
 ## Usage
 
-Run the main script:
-```python
+```bash
 python colorSensor.py
